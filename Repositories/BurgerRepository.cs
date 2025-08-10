@@ -44,14 +44,22 @@ public class BurgersRepository : IRepository<Burger>
         }
     }
 
-    public Burger Update(Burger burger)
-    {
-        // TODO
-        throw new NotImplementedException();
-    }
 
-    public Burger Update(int id, Burger updateData)
+    public void Update(Burger burger)
     {
-        throw new NotImplementedException();
+        string sql = @"
+        UPDATE burgers
+        SET
+            name = @Name,
+            price = @Price
+        WHERE
+            id = @Id;";
+
+        int rowsAffected = _db.Execute(sql, burger);
+
+        if (rowsAffected != 1)
+        {
+            throw new Exception(rowsAffected + "rows were affected and that is bad");
+        }
     }
 }

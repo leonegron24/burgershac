@@ -1,8 +1,8 @@
 public interface IRepository<T>
 {
-    IEnumerable<T> GetAll();
+    List<T> GetAll();
     T GetById(int id);
     T Create(T data);
-    bool Delete(int id);
-    T Update(int id, T updateData);
+    void Delete(int id);
+    void Update(T updateData);
 }

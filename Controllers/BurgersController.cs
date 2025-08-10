@@ -9,7 +9,7 @@ public class BurgersController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Burger>> GetBurgers()
+    public ActionResult<List<Burger>> GetBurgers()
     {
         try
         {
@@ -44,10 +44,9 @@ public class BurgersController : ControllerBase
             Burger burger = _service.GetBurgerById(id);
             return Ok(burger);
         }
-        catch (System.Exception)
+        catch (Exception e)
         {
-
-            throw;
+            return BadRequest(e.Message);
         }
     }
 
@@ -56,7 +55,7 @@ public class BurgersController : ControllerBase
     {
         try
         {
-            var burger = _service.UpdateBurger(id, update);
+            Burger burger = _service.UpdateBurger(id, update);
             return Ok(burger);
         }
         catch (Exception e)

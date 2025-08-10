@@ -20,14 +20,29 @@ public class BurgersService
     public Burger GetBurgerById(int id)
     {
         Burger burger = _repo.GetById(id);
+
+        if (burger == null)
+        {
+            throw new Exception("No burger found with the id of " + id);
+        }
         return burger;
     }
 
     public Burger UpdateBurger(int id, Burger update)
     {
-        GetBurgerById(id);
-        Burger burger = _repo.Update(update);
-        return burger;
+        Burger originalBurger = GetBurgerById(id);
+
+        if (originalBurger == null)
+        {
+            throw new Exception("No burger found with the id of " + id);
+        }
+
+        originalBurger.Name = update.Name ?? originalBurger.Name;
+        originalBurger.Price = update.Price ?? originalBurger.Price;
+
+        _repo.Update(originalBurger);
+
+        return originalBurger;
     }
 
     public void DeleteBurger(int id)
